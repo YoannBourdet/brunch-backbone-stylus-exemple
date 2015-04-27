@@ -1,0 +1,12 @@
+for weekend in weekends
+    div.hostel
+        h2=weekend.label
+        img(src=weekend.imageUrl, alt="weekend image")
+        -if(weekend.topTheme)
+            ul
+                for theme in weekend.topTheme
+                    li - #{theme}
+        -else
+            ul
+                li Désolé, il n'y a pas de thémes.
+
