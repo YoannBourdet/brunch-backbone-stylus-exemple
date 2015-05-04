@@ -23,9 +23,7 @@ var $ = require('jquery'),
             Backbone.history.start();
         },
         displayHome: function() {
-            //var homeView = new HomeView();
-            var homeView = HomeView.test();
-
+            var homeView = new HomeView();
             this.markCurrentView(homeView);
         },
         displayHostlel: function(id) {

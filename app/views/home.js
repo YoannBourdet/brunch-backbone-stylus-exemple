@@ -31,6 +31,7 @@ var $ = require('jquery'),
             'click': 'displayHostel'
         },
         initialize: function() {
+            //console.log(this.model.attributes.review.average);
             this.$el.append(homeTmp({
                 model: this.model
             }));

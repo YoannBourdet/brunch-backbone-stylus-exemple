@@ -27,6 +27,7 @@ var $ = require('jquery'),
         },
         destroy: function(cb) {
             this.remove();
+            // Remove a previously-attached event handler from the elements.
             this.unbind();
             if (typeof cb === 'function') {
                 cb();

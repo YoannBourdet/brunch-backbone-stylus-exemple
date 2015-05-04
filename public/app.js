@@ -13538,9 +13538,7 @@ var $ = require('jquery'),
             Backbone.history.start();
         },
         displayHome: function() {
-            //var homeView = new HomeView();
-            var homeView = HomeView.test();
-
+            var homeView = new HomeView();
             this.markCurrentView(homeView);
         },
         displayHostlel: function(id) {
@@ -13665,7 +13663,15 @@ var buf = [];
 var jade_mixins = {};
 var jade_interp;
 var locals_ = (locals || {}),model = locals_.model;
-buf.push("<h2>" + (jade.escape(null == (jade_interp = model.attributes.label) ? "" : jade_interp)) + "</h2><p class=\"address\">Adresse: " + (jade.escape((jade_interp = model.attributes.location.address) == null ? '' : jade_interp)) + "</p><span class=\"lat\">Latitude: " + (jade.escape((jade_interp = model.attributes.location.lat) == null ? '' : jade_interp)) + "</span><span class=\"lng\">longitude: " + (jade.escape((jade_interp = model.attributes.location.lng) == null ? '' : jade_interp)) + "</span><span class=\"review\">Review moyenne: " + (jade.escape((jade_interp = model.attributes.review.average) == null ? '' : jade_interp)) + "</span>");;return buf.join("");
+buf.push("<h2>" + (jade.escape(null == (jade_interp = model.attributes.label) ? "" : jade_interp)) + "</h2><p class=\"address\">Adresse: " + (jade.escape((jade_interp = model.attributes.location.address) == null ? '' : jade_interp)) + "</p><span class=\"lat\">Latitude: " + (jade.escape((jade_interp = model.attributes.location.lat) == null ? '' : jade_interp)) + "</span><span class=\"lng\">longitude: " + (jade.escape((jade_interp = model.attributes.location.lng) == null ? '' : jade_interp)) + "</span>");
+if(model.attributes.review)
+{
+buf.push("<span class=\"review\">Review moyenne: " + (jade.escape((jade_interp = model.attributes.review.average) == null ? '' : jade_interp)) + "</span>");
+}
+else
+{
+buf.push("<span class=\"review\">Pas de review moyenne renseignée.</span>");
+};return buf.join("");
 };
 if (typeof define === 'function' && define.amd) {
   define([], function() {
@@ -13712,6 +13718,7 @@ var $ = require('jquery'),
             'click': 'displayHostel'
         },
         initialize: function() {
+            //console.log(this.model.attributes.review.average);
             this.$el.append(homeTmp({
                 model: this.model
             }));
@@ -13790,6 +13797,7 @@ var $ = require('jquery'),
         },
         destroy: function(cb) {
             this.remove();
+            // Remove a previously-attached event handler from the elements.
             this.unbind();
             if (typeof cb === 'function') {
                 cb();
