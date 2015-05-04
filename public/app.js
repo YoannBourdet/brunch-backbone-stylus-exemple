@@ -345,9 +345,9 @@ require.register("entities/hostelList", function(exports, require, module) {
 
 var $ = require('jquery'),
     Backbone = require('backbone'),
-    hostel = Backbone.Model.extend({}),
-    hostelList = Backbone.Collection.extend({
-        model: hostel,
+    Hostel = Backbone.Model.extend({}),
+    HostelList = Backbone.Collection.extend({
+        model: Hostel,
         url: 'http://api.weekendesk.com/api/weekends.json?orderBy=priceQuality&locale=fr_FR&limit=50&page=0',
         parse: function(data) {
             return data.exactMatch;
@@ -355,12 +355,12 @@ var $ = require('jquery'),
     }, {
         // singleton pattern
         getList: function() {
-            hostelList.singleton = hostelList.singleton || new hostelList;
-            return hostelList.singleton;
+            HostelList.singleton = HostelList.singleton || new HostelList();
+            return HostelList.singleton;
         }
     });
 
-module.exports = hostelList;
+module.exports = HostelList;
 
 });
 
@@ -13524,16 +13524,30 @@ var $ = require('jquery'),
             '': 'displayHome',
             'hotels/:id': 'displayHostlel',
         },
+        markCurrentView: function(view) {
+            var self = this;
+            if (this.currentView) {
+                this.currentView.destroy(function() {
+                    self.currentView = view;
+                });
+            } else {
+                this.currentView = view;
+            }
+        },
         initialize: function() {
             Backbone.history.start();
         },
         displayHome: function() {
-            new HomeView();
+            //var homeView = new HomeView();
+            var homeView = HomeView.test();
+
+            this.markCurrentView(homeView);
         },
         displayHostlel: function(id) {
-            new HostelView({
+            var hostelView = new HostelView({
                 id: id
             });
+            this.markCurrentView(hostelView);
         }
     });
 
@@ -13650,29 +13664,8 @@ var __templateData = function template(locals) {
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-var locals_ = (locals || {}),items = locals_.items;
-// iterate items
-;(function(){
-  var $$obj = items;
-  if ('number' == typeof $$obj.length) {
-
-    for (var $index = 0, $$l = $$obj.length; $index < $$l; $index++) {
-      var item = $$obj[$index];
-
-buf.push("<div" + (jade.attr("data-id", item.id, true, false)) + " class=\"hostel list\"><h2>" + (jade.escape(null == (jade_interp = item.attributes.label) ? "" : jade_interp)) + "</h2><p class=\"address\">Adresse: " + (jade.escape((jade_interp = item.attributes.location.address) == null ? '' : jade_interp)) + "</p><span class=\"lat\">Latitude: " + (jade.escape((jade_interp = item.attributes.location.lat) == null ? '' : jade_interp)) + "</span><span class=\"lng\">longitude: " + (jade.escape((jade_interp = item.attributes.location.lng) == null ? '' : jade_interp)) + "</span><span class=\"review\">Review moyenne: " + (jade.escape((jade_interp = item.attributes.review.average) == null ? '' : jade_interp)) + "</span></div>");
-    }
-
-  } else {
-    var $$l = 0;
-    for (var $index in $$obj) {
-      $$l++;      var item = $$obj[$index];
-
-buf.push("<div" + (jade.attr("data-id", item.id, true, false)) + " class=\"hostel list\"><h2>" + (jade.escape(null == (jade_interp = item.attributes.label) ? "" : jade_interp)) + "</h2><p class=\"address\">Adresse: " + (jade.escape((jade_interp = item.attributes.location.address) == null ? '' : jade_interp)) + "</p><span class=\"lat\">Latitude: " + (jade.escape((jade_interp = item.attributes.location.lat) == null ? '' : jade_interp)) + "</span><span class=\"lng\">longitude: " + (jade.escape((jade_interp = item.attributes.location.lng) == null ? '' : jade_interp)) + "</span><span class=\"review\">Review moyenne: " + (jade.escape((jade_interp = item.attributes.review.average) == null ? '' : jade_interp)) + "</span></div>");
-    }
-
-  }
-}).call(this);
-;return buf.join("");
+var locals_ = (locals || {}),model = locals_.model;
+buf.push("<h2>" + (jade.escape(null == (jade_interp = model.attributes.label) ? "" : jade_interp)) + "</h2><p class=\"address\">Adresse: " + (jade.escape((jade_interp = model.attributes.location.address) == null ? '' : jade_interp)) + "</p><span class=\"lat\">Latitude: " + (jade.escape((jade_interp = model.attributes.location.lat) == null ? '' : jade_interp)) + "</span><span class=\"lng\">longitude: " + (jade.escape((jade_interp = model.attributes.location.lng) == null ? '' : jade_interp)) + "</span><span class=\"review\">Review moyenne: " + (jade.escape((jade_interp = model.attributes.review.average) == null ? '' : jade_interp)) + "</span>");;return buf.join("");
 };
 if (typeof define === 'function' && define.amd) {
   define([], function() {
@@ -13693,30 +13686,45 @@ var $ = require('jquery'),
     View = require('views/view'),
     hostelList = require('entities/hostelList'),
     homeTmp = require('templates/hostelList'),
-    HomeView = View.extend({
-        el: '#main',
-        events: {
-            'click .hostel.list': 'displayHostel'
-        },
+    HomeViewList = View.extend({
+        tagName: 'div',
+        className: 'wrapper',
         initialize: function() {
             this.collectionFetch(hostelList);
         },
         render: function() {
-            this.$el.html(homeTmp({
-                items: this.collection.models
-            }));
+            this.collection.each(function(hostel) {
+                var hostelDetail = new HomeViewDetail({
+                    model: hostel
+                });
+                this.$el.append(hostelDetail.el);
+            }, this);
+
+            $('#main').html(this.$el);
+
             return this;
+        }
+    }),
+    HomeViewDetail = Backbone.View.extend({
+        tagName: 'div',
+        className: 'hostel list',
+        events: {
+            'click': 'displayHostel'
+        },
+        initialize: function() {
+            this.$el.append(homeTmp({
+                model: this.model
+            }));
         },
         displayHostel: function(e) {
-            var id = $(e.currentTarget).data("id");
+            var id = this.model.id;
             Backbone.history.navigate('hotels/' + id, {
                 trigger: true
             });
-
         }
     });
 
-module.exports = HomeView;
+module.exports = HomeViewList;
 
 });
 
@@ -13729,16 +13737,21 @@ var $ = require('jquery'),
     hostelList = require('entities/hostelList'),
     hostelTmp = require('templates/hostel'),
     HostelView = View.extend({
-        el: '#main',
+        tagName: 'div',
+        className: 'wrapper',
         initialize: function() {
             this.collectionFetch(hostelList);
         },
         render: function() {
             var model = this.collection.get(this.id),
                 weekends = model.get('weekend');
-            this.$el.html(hostelTmp({
+
+            this.$el.append(hostelTmp({
                 weekends: weekends
             }));
+
+            $('#main').html(this.$el);
+
             return this;
         }
     });
@@ -13755,7 +13768,7 @@ var $ = require('jquery'),
     _ = require('underscore'),
     View = Backbone.View.extend({
         initialize: function() {
-            _.bindAll(this, 'collectionFetch');
+            _.bindAll(this, 'collectionFetch', 'destroy');
         },
         /**
          * [collectionFetch permet de fetcher la collection qu'un seule fois
@@ -13765,12 +13778,21 @@ var $ = require('jquery'),
         collectionFetch: function(Collection) {
             var self = this;
             this.collection = Collection.getList();
-            if (this.collection.length === 0) {
+
+            if (!this.collection.fetched || this.collection.fetched === undefined) {
                 this.collection.fetch().success(function() {
+                    self.collection.fetched = true;
                     self.render();
                 });
             } else {
                 self.render();
+            }
+        },
+        destroy: function(cb) {
+            this.remove();
+            this.unbind();
+            if (typeof cb === 'function') {
+                cb();
             }
         },
     });

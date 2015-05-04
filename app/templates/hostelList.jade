@@ -1,7 +1,5 @@
-for item in items
-    div.hostel.list(data-id=item.id)
-        h2=item.attributes.label
-        p.address Adresse: #{item.attributes.location.address}
-        span.lat Latitude: #{item.attributes.location.lat}
-        span.lng longitude: #{item.attributes.location.lng}
-        span.review Review moyenne: #{item.attributes.review.average}
+h2=model.attributes.label
+p.address Adresse: #{model.attributes.location.address}
+span.lat Latitude: #{model.attributes.location.lat}
+span.lng longitude: #{model.attributes.location.lng}
+span.review Review moyenne: #{model.attributes.review.average}

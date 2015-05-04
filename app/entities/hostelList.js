@@ -2,9 +2,9 @@
 
 var $ = require('jquery'),
     Backbone = require('backbone'),
-    hostel = Backbone.Model.extend({}),
-    hostelList = Backbone.Collection.extend({
-        model: hostel,
+    Hostel = Backbone.Model.extend({}),
+    HostelList = Backbone.Collection.extend({
+        model: Hostel,
         url: 'http://api.weekendesk.com/api/weekends.json?orderBy=priceQuality&locale=fr_FR&limit=50&page=0',
         parse: function(data) {
             return data.exactMatch;
@@ -12,9 +12,9 @@ var $ = require('jquery'),
     }, {
         // singleton pattern
         getList: function() {
-            hostelList.singleton = hostelList.singleton || new hostelList;
-            return hostelList.singleton;
+            HostelList.singleton = HostelList.singleton || new HostelList();
+            return HostelList.singleton;
         }
     });
 
-module.exports = hostelList;
+module.exports = HostelList;

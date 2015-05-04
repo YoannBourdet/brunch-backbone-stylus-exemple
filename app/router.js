@@ -9,16 +9,30 @@ var $ = require('jquery'),
             '': 'displayHome',
             'hotels/:id': 'displayHostlel',
         },
+        markCurrentView: function(view) {
+            var self = this;
+            if (this.currentView) {
+                this.currentView.destroy(function() {
+                    self.currentView = view;
+                });
+            } else {
+                this.currentView = view;
+            }
+        },
         initialize: function() {
             Backbone.history.start();
         },
         displayHome: function() {
-            new HomeView();
+            //var homeView = new HomeView();
+            var homeView = HomeView.test();
+
+            this.markCurrentView(homeView);
         },
         displayHostlel: function(id) {
-            new HostelView({
+            var hostelView = new HostelView({
                 id: id
             });
+            this.markCurrentView(hostelView);
         }
     });
 

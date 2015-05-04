@@ -210,12 +210,12 @@ body {
   width: 100%;
   background-color: #f0f0f0;
 }
-#main {
+.wrapper {
   width: 1000px;
   margin: 0 auto;
   padding-top: 20px;
 }
-#main .hostel {
+.wrapper .hostel {
   width: 31%;
   height: 350px;
   margin-bottom: 20px;
@@ -235,29 +235,29 @@ body {
   -ms-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
-#main .hostel.list {
+.wrapper .hostel.list {
   height: 200px;
   cursor: pointer;
 }
-#main .hostel.list:hover {
+.wrapper .hostel.list:hover {
   border: 1px solid #f00;
 }
-#main .hostel h2 {
+.wrapper .hostel h2 {
   height: 60px;
   text-align: center;
   color: #f00;
   text-transform: uppercase;
 }
-#main .hostel img {
+.wrapper .hostel img {
   width: 100%;
   height: auto;
   margin-bottom: 20px;
 }
-#main .hostel p {
+.wrapper .hostel p {
   font-size: 18px;
   margin-bottom: 10px;
 }
-#main .hostel span {
+.wrapper .hostel span {
   display: block;
 }
 

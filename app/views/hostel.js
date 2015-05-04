@@ -6,16 +6,21 @@ var $ = require('jquery'),
     hostelList = require('entities/hostelList'),
     hostelTmp = require('templates/hostel'),
     HostelView = View.extend({
-        el: '#main',
+        tagName: 'div',
+        className: 'wrapper',
         initialize: function() {
             this.collectionFetch(hostelList);
         },
         render: function() {
             var model = this.collection.get(this.id),
                 weekends = model.get('weekend');
-            this.$el.html(hostelTmp({
+
+            this.$el.append(hostelTmp({
                 weekends: weekends
             }));
+
+            $('#main').html(this.$el);
+
             return this;
         }
     });

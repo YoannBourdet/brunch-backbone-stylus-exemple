@@ -5,27 +5,42 @@ var $ = require('jquery'),
     View = require('views/view'),
     hostelList = require('entities/hostelList'),
     homeTmp = require('templates/hostelList'),
-    HomeView = View.extend({
-        el: '#main',
-        events: {
-            'click .hostel.list': 'displayHostel'
-        },
+    HomeViewList = View.extend({
+        tagName: 'div',
+        className: 'wrapper',
         initialize: function() {
             this.collectionFetch(hostelList);
         },
         render: function() {
-            this.$el.html(homeTmp({
-                items: this.collection.models
-            }));
+            this.collection.each(function(hostel) {
+                var hostelDetail = new HomeViewDetail({
+                    model: hostel
+                });
+                this.$el.append(hostelDetail.el);
+            }, this);
+
+            $('#main').html(this.$el);
+
             return this;
+        }
+    }),
+    HomeViewDetail = Backbone.View.extend({
+        tagName: 'div',
+        className: 'hostel list',
+        events: {
+            'click': 'displayHostel'
+        },
+        initialize: function() {
+            this.$el.append(homeTmp({
+                model: this.model
+            }));
         },
         displayHostel: function(e) {
-            var id = $(e.currentTarget).data("id");
+            var id = this.model.id;
             Backbone.history.navigate('hotels/' + id, {
                 trigger: true
             });
-
         }
     });
 
-module.exports = HomeView;
+module.exports = HomeViewList;
