@@ -1,21 +1,21 @@
 {
-  "name": "exercicewed",
+  "name": "Brunch-backbone-exemple",
   "version": "1.0.0",
-  "description": "",
+  "description": "Small SPA with Brunch + backbone",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YoannnBourdet/exercicewed.git"
+    "url": "https://github.com/YoannnBourdet/Brunch-backbone-exemple.git"
   },
   "author": "Yoann Bourdet",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YoannnBourdet/exercicewed/issues"
+    "url": "https://github.com/YoannnBourdet/Brunch-backbone-exemple/issues"
   },
-  "homepage": "https://github.com/YoannnBourdet/exercicewed",
+  "homepage": "https://github.com/YoannnBourdet/Brunch-backbone-exemple",
   "devDependencies": {
     "brunch": "^1.8.2",
     "css-brunch": "^1.7.0",
