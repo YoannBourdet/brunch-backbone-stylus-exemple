@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YoannnBourdet/Brunch-backbone-exemple.git"
+    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple.git"
   },
   "author": "Yoann Bourdet",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YoannnBourdet/Brunch-backbone-exemple/issues"
+    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple/issues"
   },
-  "homepage": "https://github.com/YoannnBourdet/Brunch-backbone-exemple",
+  "homepage": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple",
   "devDependencies": {
     "brunch": "^1.8.2",
     "css-brunch": "^1.7.0",
