@@ -1,21 +1,21 @@
 {
   "name": "Brunch-backbone-exemple",
   "version": "1.0.0",
-  "description": "Small SPA with Brunch + backbone",
+  "description": "Small SPA with Brunch + Backbone + Stylus",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple.git"
+    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Stylus-Exemple.git"
   },
   "author": "Yoann Bourdet",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple/issues"
+    "url": "https://github.com/YoannnBourdet/Brunch-Backbone-Stylus-Exemple/issues"
   },
-  "homepage": "https://github.com/YoannnBourdet/Brunch-Backbone-Exemple",
+  "homepage": "https://github.com/YoannnBourdet/Brunch-Backbone-Stylus-Exemple",
   "devDependencies": {
     "brunch": "^1.8.2",
     "css-brunch": "^1.7.0",
